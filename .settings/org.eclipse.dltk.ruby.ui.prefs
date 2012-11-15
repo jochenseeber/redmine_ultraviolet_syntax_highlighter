@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+formatter.indentation.size=4
+formatter.tabulation.char=space
+formatter.tabulation.size=4
+formatterId=org.eclipse.dltk.ruby.formatter.RubyFormatterFactory

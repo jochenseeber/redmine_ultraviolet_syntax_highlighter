@@ -24,11 +24,15 @@ module RedmineUltravioletSyntaxHighlighter
         end
 
         def highlight_by_language(text, language)
-            markup = Uv.parse(text, "xhtml", language, false, 'dawn')
+            markup = Uv.parse(text, "xhtml", language, false, ultraviolet_theme)
             markup[/^<pre[^>]*>(.*)<\/pre>$/m, 1]
         rescue => ex
             Rails.logger.error "Error highlighting code with language '#{language}' with Ultraviolet: #{ex}"
             ERB::Util.h(text)
+        end
+
+        def ultraviolet_theme
+            Setting.plugin_redmine_ultraviolet_syntax_highlighter['ultraviolet_theme'] || 'dawn'
         end
     end
 end

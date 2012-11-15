@@ -14,11 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-module RedmineUltravioletSyntaxHighlighter
-    class StylesheetHook < Redmine::Hook::ViewListener
-        def view_layouts_base_html_head(context = {})
-            theme = RedmineUltravioletSyntaxHighlighter::ultraviolet_theme
-            stylesheet_link_tag("/plugin_assets/redmine_ultraviolet_syntax_highlighter/ultraviolet/#{theme}.css")
+class AddUltravioletThemeToUser < ActiveRecord::Migration
+    def self.up
+        change_table :users do |t|
+            t.string :ultraviolet_theme, :limit => 32
+        end
+    end
+
+    def self.down
+        change_table :issues do |t|
+            t.remove :ultraviolet_theme
         end
     end
 end

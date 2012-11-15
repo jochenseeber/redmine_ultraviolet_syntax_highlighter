@@ -27,6 +27,8 @@ Redmine::Plugin.register :redmine_ultraviolet_syntax_highlighter do
     url 'https://github.com/jochenseeber/redmine_ultraviolet_syntax_highlighter'
     author_url 'http://www.noussommesdesoles.net'
 
+    settings(:default => { 'ultraviolet_theme' => 'dawn' }, :partial => 'settings/ultraviolet_settings')
+
     # Copy Ultraviolet style sheets to the plugin's asset directory
     target_dir = File.join(public_directory, 'ultraviolet')
     FileUtils.mkdir_p(target_dir)
@@ -34,8 +36,9 @@ Redmine::Plugin.register :redmine_ultraviolet_syntax_highlighter do
     files = Dir.entries(Uv.theme_path).select {|f| f =~ /\.css$/i}
     files.each do |f|
         css = File.read(File.join(Uv.theme_path, f))
-        # Adjust stylesheet to match Redmines HTML
+        # Adjust stylesheet to match Redmine's HTML
         css.gsub!(/^\s*pre.\w+/m, '.syntaxhl')
+        css.gsub!(/^\s*.syntaxhl\s*{/m, '.syntaxhl, div.wiki pre.syntaxhl {')
         File.open(File.join(target_dir, f), 'w') do |out|
             out.write css
         end

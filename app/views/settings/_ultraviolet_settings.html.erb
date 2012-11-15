@@ -1,0 +1,4 @@
+<p>
+    <label><%= l(:label_ultraviolet_theme) %></label>
+    <%= select_tag('settings[ultraviolet_theme]', options_for_select(Uv.themes, @settings['ultraviolet_theme'])) %>
+</p>
